@@ -1,0 +1,25 @@
+.report-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #005f73;
+}
+
+.report-container h1 {
+    text-align: center;
+}
+
+
+/*Estilo para cada li*/
+
+strong {
+    text-transform: uppercase;
+}
+
+.report-container ul li:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}

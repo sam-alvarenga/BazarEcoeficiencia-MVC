@@ -1,0 +1,49 @@
+USE bd_Ecoeficiencia;
+
+/*Relatório: Pessoas que mais doaram por quantidade*/
+SELECT u.nome AS nome_usuario, SUM(dp.quantidade) AS total_doado FROM usuarios u 
+JOIN doacao d ON u.idUsuario = d.idUsuario JOIN doacaoProduto dp ON d.idDoacao = dp.idDoacao
+GROUP BY u.idUsuario, u.nome ORDER BY total_doado DESC;
+
+/*Relatório: Quantidade total de produtos doados*/
+SELECT SUM(dp.quantidade) AS total_quantidade_doada FROM doacaoProduto dp;
+
+/*Relatório: Quantidade de produtos em sobra (estoque)*/
+SELECT p.idProduto, p.categorias, p.quantidade AS quantidade_inicial, 
+COALESCE(SUM(dp.quantidade), 0) AS quantidade_doada, COALESCE(SUM(tp.quantidade), 0) 
+AS quantidade_trocada, (p.quantidade + COALESCE(SUM(dp.quantidade), 0) - COALESCE(SUM(tp.quantidade), 0)) AS sobra
+FROM produtos p LEFT JOIN doacaoProduto dp ON p.idProduto = dp.idProduto LEFT JOIN trocaProduto tp ON p.idProduto = tp.idProduto 
+GROUP BY p.idProduto, p.categorias, p.quantidade;
+
+/*Relatório: Quantidade total de produtos trocados*/
+SELECT COUNT(*) AS total_trocas FROM troca;
+
+/*Relatório: Quantidade de trocas por categoria*/
+SELECT p.categorias,COUNT(DISTINCT t.idTroca) AS total_trocas,SUM(tp.quantidade) AS total_itens_trocados
+FROM troca t JOIN trocaProduto tp ON t.idTroca = tp.idTroca JOIN produtos p ON tp.idProduto = p.idProduto GROUP BY p.categorias;
+
+
+
+/*DML - MASSA*/
+INSERT INTO usuarios (nome, email, senha, perfil, coin) VALUES ("leticia", "leticiaavolio09@gmail.com", "2475", "ADM", 0),
+("kailany", "kaikaibalao@gmail.com", "2020", "Colaborador", 0),("samantha", "samanthinhaRJ@gmail.com", "5068", "Doador", 0),
+("arley", "docarley@gmail.com", "0102", "Doador", 0),("eduardo", "profedu@gmail.com", "9857", "Doador", 0),
+("edson", "edinhodovale@gmail.com", "6969", "ADM", 0),("marcelo", "xerife@gmail.com", "3461", "Doador", 0),
+("robson", "jose@gmail.com", "5246", "Colaborador", 0);
+
+INSERT INTO produtos (coin, categorias, quantidade) VALUES (3, "Acessórios", 15),(5, "Brinquedos",23),(3,"Decoração",10),(5,"Vestuário",12),
+(6,"Artigos Automotivos",9),(3,"Utensilios de Cozinha",50),(10,"Eletronicos",7),(10,"Mochilas",8);
+
+SELECT * FROM usuarios;
+SELECT * FROM produtos;
+SELECT * FROM doacao;
+SELECT * FROM troca;
+
+INSERT INTO troca(idUsuario) VALUES (1),(2),(3),(4),(5),(6),(7),(8),(1),(1);
+INSERT INTO doacao(idUsuario) VALUES (1),(2),(3),(4),(5),(6),(7),(8),(1),(1);
+
+INSERT INTO doacaoProduto(idDoacao, idProduto, quantidade) VALUES (1,8,10),(2,4,10),(3,4,10),(4,7,10),(5,3,10),(6,3,10),(7,1,10),(8,6,10),
+(9,4,10),(10,5,10);
+
+INSERT INTO trocaProduto(idTroca, idProduto, quantidade) VALUES (1,1,2),(2,6,2),(3,4,2),(4,8,2),(5,7,2),(6,3,2),(7,1,2),(8,6,2),(9,1,2),
+(10,7,2);

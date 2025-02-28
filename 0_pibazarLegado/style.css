@@ -1,0 +1,77 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* INDEX */
+.sidebar {
+    width: 250px;
+    background-color: #0a9396;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin: 15px 0;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #0a9396;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    background-color: #f4f4f9;
+    overflow-y: auto;
+}
+
+.msg{
+    display: block;
+    text-align: center;    
+    font-weight: bold; 
+    padding: 36px 0;   
+}
+
+.msgok{
+    color:darkgreen;
+}
+.msgerr{
+    color:crimson;
+}
